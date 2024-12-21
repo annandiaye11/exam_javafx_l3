@@ -7,7 +7,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder.In;
 
 import exam.entities.Article;
 import exam.entities.Client;
@@ -21,7 +20,6 @@ import exam.repositories.impl.ArticleRepositoryImpl;
 import exam.repositories.impl.ClientRepositoryImpl;
 import exam.repositories.impl.CommandeRepositoryImpl;
 import exam.repositories.impl.DetailArticleCommandeRepositoryImpl;
-import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -113,41 +111,7 @@ public class CommandeController {
         
 
     }
-
-    public void addArticleTocommandet() {
-        String name = articleName.getText();
-        TypedQuery<Article> query = em.createQuery("SELECT a FROM Article a WHERE a.libelle = :name", Article.class);
-        query.setParameter("name", name);
-        Article article = query.getSingleResult();
-
-        if (article != null) {
-            System.out.println("-----------------------------------------------------------------------");
-            System.out.println("Article trouvé : " + article.toString());
-            System.out.println("-----------------------------------------------------------------------");
-            // Créer un nouveau détail de dette
-            DetailArticleCommande debtArticlesTable = new DetailArticleCommande();
-            debtArticlesTable.setArticle(article);
-            debtArticlesTable.setQuantity(Integer.parseInt(articleQuantity.getText()));
-            debtArticlesTable.setPrix(article.getPrix() * debtArticlesTable.getQuantity());
-            
-            // Ajouter le détail de dette à la table des articles de la dette
-            commandetArticlesTable.getItems().add(debtArticlesTable);
-
-            // Réinitialiser les champs de saisie
-            articleName.clear();
-            articleQuantity.clear();
-            articlePrice.clear();
-
-        } else {
-            // Gérer le cas où aucun article n'est trouvé
-            System.out.println("-----------------------------------------------------------------------");
-            System.out.println("Aucun article trouvé avec ce nom.");
-            System.out.println("-----------------------------------------------------------------------");
-            // em.getTransaction().rollback();
-        }
-    }
-
-    public void createcommande() {
+    public void createAcommande() {
         em.getTransaction().begin();
         try {
             // Recherche du client
@@ -204,6 +168,39 @@ public class CommandeController {
         }
 
     }
+
+    public void addArticleTocommande() {
+        String name = articleName.getText();
+        TypedQuery<Article> query = em.createQuery("SELECT a FROM Article a WHERE a.libelle = :name", Article.class);
+        query.setParameter("name", name);
+        Article article = query.getSingleResult();
+
+        if (article != null) {
+            System.out.println("-----------------------------------------------------------------------");
+            System.out.println("Article trouvé : " + article.toString());
+            System.out.println("-----------------------------------------------------------------------");
+            // Créer un nouveau détail de dette
+            DetailArticleCommande debtArticlesTable = new DetailArticleCommande();
+            debtArticlesTable.setArticle(article);
+            debtArticlesTable.setQuantity(Integer.parseInt(articleQuantity.getText()));
+            debtArticlesTable.setPrix(article.getPrix() * debtArticlesTable.getQuantity());
+            
+            // Ajouter le détail de dette à la table des articles de la dette
+            commandetArticlesTable.getItems().add(debtArticlesTable);
+
+            // Réinitialiser les champs de saisie
+            articleName.clear();
+            articleQuantity.clear();
+            articlePrice.clear();
+
+        } else {
+            // Gérer le cas où aucun article n'est trouvé
+            System.out.println("-----------------------------------------------------------------------");
+            System.out.println("Aucun article trouvé avec ce nom.");
+            System.out.println("-----------------------------------------------------------------------");
+        }
+    }
+
 
     public void search() {
         String phone = clientTelephone.getText();

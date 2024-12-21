@@ -27,8 +27,8 @@
                 <TextField fx:id="articlePrice" disable="true" promptText="Prix" />
                
             </HBox>
-            <Button fx:id="btnAjout" disable="true" text="Ajouter Article" onAction="#addArticleTocommandet" />
-            <Button fx:id="btnEnregistrer" disable="true" text="Créer Commande" onAction="#createcommande" />
+            <Button fx:id="btnAjout" disable="true" text="Ajouter Article" onAction="#addArticleTocommande" />
+            <Button fx:id="btnEnregistrer" disable="true" text="Créer Commande" onAction="#createAcommande" />
         </VBox>
     </Tab>
 

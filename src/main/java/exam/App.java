@@ -17,13 +17,10 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        // DataInitializer dataInitializer = new DataInitializer();
-        // dataInitializer.init();
+
     
         Parent root = FXMLLoader.load(getClass().getResource("/views/commande/index.fxml"));
-        // primaryStage.setTitle("Sélection du Rôle");
-    
-        // Définir la taille de la scène (largeur = 800, hauteur = 600 par exemple)
+   
         Scene scene = new Scene(root, 1000, 800);
     
         primaryStage.setScene(scene);
